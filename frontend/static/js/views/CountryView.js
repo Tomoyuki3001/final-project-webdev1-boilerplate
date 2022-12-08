@@ -14,25 +14,27 @@ export default class extends AbstractView {
       (country) => country.cca3 == countryID
     );
 
-    console.log(currentCountry);
+    console.log("check current country", currentCountry);
     const borderCountriesContainer = document.createElement("div");
 
-    currentCountry.borderCountries.map((country) => {
-      let borderCountry = countryArr.find((border) => border.cca3 == country);
+    if (currentCountry.borderCountries === undefined) {
+      currentCountry.borderCountries = [];
+    } else {
+      currentCountry.borderCountries.map((country) => {
+        let borderCountry = countryArr.find((border) => border.cca3 == country);
 
-      const borderButton = document.createElement("a");
-      console.log(borderCountry.name);
+        const borderButton = document.createElement("a");
+        console.log(borderCountry.name);
+        borderButton.innerHTML = borderCountry.name;
+        borderButton.setAttribute("href", borderCountry.cca3);
+        borderButton.className = "border-country-button";
+        borderButton.classList.add("view-darkmode");
+        borderButton.classList.add("countryViewButtonlight");
+        borderCountriesContainer.appendChild(borderButton);
+      });
+    }
 
-      borderButton.innerHTML = borderCountry.name;
-      borderButton.setAttribute("href", borderCountry.cca3);
-      borderButton.className = "border-country-button";
-      borderButton.classList.add("view-darkmode");
-      borderButton.classList.add("countryViewButtonlight");
-
-      borderCountriesContainer.appendChild(borderButton);
-    });
-
-    console.log(borderCountriesContainer);
+    console.log("check country container", borderCountriesContainer);
 
     return `
     <header>
